@@ -58,6 +58,42 @@ std::array<typename Clock::duration, N> sample(Func&& function) {
   std::sort(samples.begin(), samples.end());
   return samples;
 }
+
+struct StopWatch {
+  using Clock = std::chrono::high_resolution_clock;
+  using time_point = typename Clock::time_point;
+  using duration = typename Clock::duration;
+
+  StopWatch(){ tic_point = Clock::now(); };
+
+  time_point tic_point;
+
+  void tic() { 
+    tic_point = Clock::now(); 
+  };
+
+  double toc() { 
+    return std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - tic_point).count()/1000000.0; 
+  };
+
+  // for different precisions
+  double stoc() { 
+    return std::chrono::duration_cast<std::chrono::seconds>(Clock::now() - tic_point).count(); 
+  };
+
+  double mtoc() { 
+    return std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - tic_point).count()/1000.0; 
+  };
+
+  double utoc() { 
+    return std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - tic_point).count()/1000000.0; 
+  };
+
+  double ntoc() { 
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - tic_point).count()/1000000000.0; 
+  };
+};
+
 }  // namespace stopwatch
 
 #endif  // STOPWATCH_H_
