@@ -9,3 +9,14 @@ add_library(stopwatch INTERFACE)
 target_include_directories(stopwatch INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
+
+install(TARGETS stopwatch
+    EXPORT xmotionTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include)
+
+file(GLOB HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/include/stopwatch/*.hpp")
+install(FILES ${HEADER_FILES}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/stopwatch)
